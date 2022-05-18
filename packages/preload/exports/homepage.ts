@@ -1,1 +1,1 @@
-import '../common/api';
+import "../common/api";

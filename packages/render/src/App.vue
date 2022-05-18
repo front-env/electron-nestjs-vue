@@ -1,6 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "@/components/HelloWorld.vue";
+import { onMounted, reactive } from "vue";
+const data = reactive({
+  preloadRoot: "",
+});
+const init = async () => {
+  const preloadRoot = window.ESAPI?.getPreloadRoot();
+  console.log("pre: ", preloadRoot);
+  if (preloadRoot) {
+    data.preloadRoot = await preloadRoot;
+    console.log("data: ", data.preloadRoot);
+  }
+};
+
+onMounted(() => {
+  init();
+});
 </script>
 
 <template>
@@ -15,7 +31,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
+      preloadRoot: {{ data.preloadRoot }}
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

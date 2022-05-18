@@ -27,7 +27,6 @@ const files = glob.sync(`exports/**/*.{js,ts}`).map((uri) => {
 const production = !process.env.ROLLUP_WATCH;
 const extensions = [".js", ".ts"];
 
-console.log("files: ", files);
 export default files.map((item) => ({
   input: item.input,
   output: {
