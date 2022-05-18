@@ -1,0 +1,8 @@
+{
+  "exports": {
+    "wrapper": {
+      "douyin": true,
+      "homppage": true
+    }
+  }
+}
