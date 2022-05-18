@@ -20,7 +20,12 @@ import HelloWorld from "@/components/HelloWorld.vue";
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
-      <el-button>Default</el-button>
+      <el-button>Element-Plus Button</el-button><br /><br />
+      <div
+        class="border-solid border-2 border-indigo-600 p-6 bg-[#dddddd] text-blue-900"
+      >
+        TailwindCSS supported!
+      </div>
     </div>
   </header>
 
