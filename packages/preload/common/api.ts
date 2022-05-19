@@ -1,11 +1,5 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { ipcRenderer } from "electron";
 import axios from "axios";
-
-contextBridge.exposeInMainWorld("ESAPI", {
-  getPort: () => ipcRenderer.invoke("global:port"),
-  getDeviceId: () => ipcRenderer.invoke("global:deviceId"),
-  getPreloadRoot: () => ipcRenderer.invoke("global:getPreloadRoot"),
-});
 
 export const getAPi = (() => {
   let globalAPi = null;

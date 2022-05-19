@@ -12,29 +12,52 @@ import globals from "rollup-plugin-node-globals";
 import builtins from "rollup-plugin-node-builtins";
 
 const basename = path.basename(__dirname);
-console.log("basename: ", basename);
+const distRoot = path.resolve(__dirname, "../main/dist/", basename);
+const MAIN_EXPORTS = "main-exports";
+const RENDERER_EXPORTS = "renderer-exports";
 
-const files = glob.sync(`exports/**/*.{js,ts}`).map((uri) => {
-  const route = path.relative(`exports`, uri);
+const rendererExports = glob
+  .sync(`${RENDERER_EXPORTS}/**/*.{js,ts}`)
+  .map((uri) => {
+    const route = path.relative(RENDERER_EXPORTS, uri);
+    const info = path.parse(route);
+    const key = path.join(info.dir, `${info.name}`);
+    return {
+      type: RENDERER_EXPORTS,
+      key,
+      // wrapper: [
+      //   "window.addEventListener('DOMContentLoaded', function() {",
+      //   "});",
+      // ],
+      input: path.resolve(RENDERER_EXPORTS, route),
+      output: path.resolve(distRoot, RENDERER_EXPORTS, `${key}.js`),
+    };
+  });
+
+const mainExports = glob.sync(`${MAIN_EXPORTS}/**/*.{js,ts}`).map((uri) => {
+  const route = path.relative(MAIN_EXPORTS, uri);
   const info = path.parse(route);
   const key = path.join(info.dir, `${info.name}`);
   return {
+    type: MAIN_EXPORTS,
     key,
-    input: path.resolve("exports", route),
-    output: path.resolve("../main/dist", basename, `${key}.js`),
+    // wrapper: ["", ""],
+    input: path.resolve(MAIN_EXPORTS, route),
+    output: path.resolve(distRoot, MAIN_EXPORTS, `${key}.js`),
   };
 });
+
 const production = !process.env.ROLLUP_WATCH;
 const extensions = [".js", ".ts"];
 
-export default files.map((item) => ({
+export default [...rendererExports, ...mainExports].map((item) => ({
   input: item.input,
   output: {
     file: item.output,
-    format: "commonjs",
-    sourcemap: true,
-    banner: "window.addEventListener('DOMContentLoaded', function() {",
-    footer: "})",
+    format: item.type === MAIN_EXPORTS ? "commonjs" : "iife",
+    sourcemap: false,
+    // banner: item.wrapper[0],
+    // footer: item.wrapper[1],
   },
   plugins: [
     commonjs(), // converts date-fns to ES modules
@@ -55,7 +78,10 @@ export default files.map((item) => ({
     !production && strip(),
     filesize(),
   ],
-  external: (id) => {
-    return /\/node_modules\//.test(id);
-  },
+  external:
+    item.type === MAIN_EXPORTS
+      ? (id) => {
+          return /\/node_modules\//.test(id);
+        }
+      : (id) => false,
 }));

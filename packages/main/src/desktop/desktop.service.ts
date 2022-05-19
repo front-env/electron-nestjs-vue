@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { app, BrowserWindow } from 'electron';
-import { join } from 'path';
 import desktopConfig from './desktop.config';
 import { initIpcMainHandle } from './desktop.ipc-main';
+import { getPreloadFile } from '../utils/utils';
 
 @Injectable()
 export class DesktopService {
@@ -47,7 +47,7 @@ export class DesktopService {
         contextIsolation: true,
         devTools: true,
         webviewTag: true,
-        preload: join(__dirname, '../../preload/homepage.js'),
+        preload: getPreloadFile('homepage.js'),
         allowRunningInsecureContent: true,
       },
     });

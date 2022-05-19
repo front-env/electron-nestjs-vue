@@ -2,7 +2,7 @@
   "exports": {
     "wrapper": {
       "douyin": true,
-      "homppage": true
+      "homppage": false
     }
   }
 }
