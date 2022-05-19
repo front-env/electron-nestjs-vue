@@ -5,7 +5,7 @@ export default registerAs('desktop', async () => {
   const port = await getPort();
   return {
     renderUrl: 'http://127.0.0.1:5678',
-    renderFile: path.join(__dirname, '../../render/index.html'),
+    renderFile: path.join(__dirname, '../../renderer/index.html'),
     // renderUrl: 'https://www.bing.com',
 
     // homepage: 'http://127.0.0.1:4000/album/list',

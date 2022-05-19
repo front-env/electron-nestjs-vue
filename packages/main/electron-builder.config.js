@@ -11,7 +11,7 @@ const config = {
   electronDownload: {
     mirror: 'https://npm.taobao.org/mirrors/electron/',
   },
-  // files: ['dist/render/**/*', 'dist/main/**/*', 'dist/preload/**/*'],
+  // files: ['dist/renderer/**/*', 'dist/main/**/*', 'dist/preload/**/*'],
   nsis: {
     oneClick: false,
     allowElevation: true,
