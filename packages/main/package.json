@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "ts-node scripts/dev.ts",
     "watch": "nest start --watch",
-    "prebuild": "rimraf dist",
+    "prebuild.bak": "rimraf dist",
     "build": "nest build",
     "build:app": "ts-node scripts/build.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
