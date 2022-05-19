@@ -4,16 +4,14 @@ import ElectronWebview from "@/components/electron-webview.vue";
 import { computed } from "vue";
 
 const store = useElectronStore();
-const preloadRoot = computed(() =>
-  [store.preloadRoot, "anotherpage.js"].join("/")
-);
+const preload = computed(() => [store.preloadRoot, "anotherpage.js"].join("/"));
 </script>
 
 <template>
   <div>
     <electron-webview
       v-if="store.preloadRoot"
-      :preloadRoot="preloadRoot"
+      :preload="preload"
       src="https://www.gongchang.com"
       style="width: 100vw; height: 100vh"
     ></electron-webview>

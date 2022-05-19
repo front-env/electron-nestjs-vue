@@ -9,7 +9,7 @@ export const useElectronStore = defineStore({
     async initPreloadRoot() {
       if (window.ESAPI) {
         const preloadRoot = await window.ESAPI.getPreloadRoot();
-        this.preloadRoot = [preloadRoot, "renderer-exports"].join("/");
+        this.preloadRoot = preloadRoot;
       }
       return "";
     },

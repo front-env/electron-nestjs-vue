@@ -1,21 +1,14 @@
 <script setup lang="ts">
 import { defineProps, onMounted } from "vue";
 import { h } from "@vue/runtime-dom";
-const props = defineProps(["src", "preloadRoot"]);
-
-// import { useElectronStore } from "../stores/electron";
-// import { computed, onMounted } from "vue";
-
-// const store = useElectronStore();
-// const preloadRoot = computed(() =>
-//   [store.preloadRoot, "anotherpage.js"].join("/")
-// );
+const props = defineProps(["src", "preload"]);
 
 const ElectronWebview = {
   render() {
     return h("webview", {
       src: props.src,
-      preload: `file:${props.preloadRoot}`,
+      preload: `file:${props.preload}`,
+      nodeintegration: true,
     });
   },
 };

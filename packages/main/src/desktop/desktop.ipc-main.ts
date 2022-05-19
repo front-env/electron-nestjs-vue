@@ -14,6 +14,6 @@ export const initIpcMainHandle = () => {
   });
 
   ipcMain.handle('global:getPreloadRoot', async () => {
-    return path.resolve(__dirname, '../../preload');
+    return path.resolve(__dirname, '../preload');
   });
 };

@@ -5,8 +5,8 @@ electron nestjs vue development
 ## 目录结构简要说明
 
 - packages/main 主进程模块
-- packages/preload 预加载代码模块
-- packages/render 渲染进程模块
+- packages/main/src/preload 渲染进程相关脚本
+- packages/renderer 渲染进程模块
 
 ## 安装依赖
 
