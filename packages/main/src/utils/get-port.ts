@@ -8,6 +8,5 @@ export const getPort = async () => {
       portRange: [2900, 65535],
     });
   }
-  console.log('port----: ', port);
   return port;
 };
