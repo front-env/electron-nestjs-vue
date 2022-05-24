@@ -3,5 +3,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "@nestjs/microservices": "^8.4.5"
   }
 }

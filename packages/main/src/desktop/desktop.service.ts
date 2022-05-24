@@ -1,79 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import { app, BrowserWindow } from 'electron';
-import desktopConfig from './desktop.config';
-import { initIpcMainHandle } from './desktop.ipc-main';
-import { getPreloadFile } from '../utils/utils';
+import { Injectable } from '@nestjs/common';
+import { IpcService } from './service.ipc';
+import { MainWindowService } from './service.main-window';
 
 @Injectable()
 export class DesktopService {
   constructor(
-    @Inject(desktopConfig.KEY)
-    private readonly desktopConfiguration: ConfigType<typeof desktopConfig>,
-  ) {
-    this.init();
-  }
-  async init() {
-    const isDev = !app.isPackaged;
-    app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
-    });
-
-    if (isDev) {
-      if (process.platform === 'win32') {
-        process.on('message', (data) => {
-          if (data === 'graceful-exit') {
-            app.quit();
-          }
-        });
-      } else {
-        process.on('SIGTERM', () => {
-          app.quit();
-        });
-      }
-    }
-
-    await app.whenReady();
-
-    initIpcMainHandle();
-    const win = new BrowserWindow({
-      width: 1500,
-      height: 800,
-      webPreferences: {
-        nodeIntegration: true,
-        webSecurity: false,
-        contextIsolation: true,
-        devTools: true,
-        webviewTag: true,
-        preload: getPreloadFile('homepage.js'),
-        allowRunningInsecureContent: true,
-      },
-    });
-
-    if (isDev) {
-      win.loadURL(this.desktopConfiguration.renderUrl);
-      // win.loadFile(this.desktopConfiguration.renderFile);
-    } else {
-      win.loadFile(this.desktopConfiguration.renderFile);
-      // win.loadURL(this.desktopConfiguration.renderUrl);
-      win.removeMenu();
-    }
-
-    if (process.platform === 'win32') {
-      const devtools = new BrowserWindow();
-      win.webContents.setDevToolsWebContents(devtools.webContents);
-    } else {
-      win.webContents.openDevTools({
-        mode: 'right',
-      });
-    }
-
-    win.on('closed', () => {
-      win.destroy();
-    });
-
-    return win.webContents;
-  }
+    private readonly mainWindow: MainWindowService,
+    private readonly ipcService: IpcService,
+  ) {}
 }

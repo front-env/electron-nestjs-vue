@@ -1,19 +1,24 @@
 <script setup lang="ts">
-import { useElectronStore } from "../stores/electron";
-import ElectronWebview from "@/components/electron-webview.vue";
-import { computed } from "vue";
+// import { useElectronStore } from "../stores/electron";
+const clickHandle = async () => {
+  console.log("ipcRender.invoke!");
+  const port = await window.ESAPI?.getPort();
+  console.log(port);
+};
+// import ElectronWebview from "@/components/electron-webview.vue";
 
-const store = useElectronStore();
-const preload = computed(() => [store.preloadRoot, "anotherpage.js"].join("/"));
+// import { computed } from "vue";
+
+// const store = useElectronStore();
+// const preload = computed(() => [store.preloadRoot, "anotherpage.js"].join("/"));
 </script>
 
 <template>
   <div>
-    <electron-webview
-      v-if="store.preloadRoot"
-      :preload="preload"
-      src="https://www.gongchang.com"
-      style="width: 100vw; height: 100vh"
-    ></electron-webview>
+    <div class="p-8">
+      <el-button type="primary" size="default" @click="clickHandle"
+        >ipcRender.invoke test</el-button
+      >
+    </div>
   </div>
 </template>

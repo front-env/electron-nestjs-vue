@@ -16,6 +16,8 @@ async function bootstrap() {
   );
   const port = await getPort();
   console.log(`service is starting at: ${port}`);
+
   await app.listen(port);
 }
+
 bootstrap();
