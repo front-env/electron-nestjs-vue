@@ -35,14 +35,17 @@ export class CommonService {
   }
   processWindow(win: BrowserWindow) {
     if (this.isDev) {
-      if (process.platform === 'win32') {
-        const devtools = new BrowserWindow();
-        win.webContents.setDevToolsWebContents(devtools.webContents);
-      } else {
-        win.webContents.openDevTools({
-          mode: 'right',
-        });
-      }
+      // if (process.platform === 'win32') {
+      //   const devtools = new BrowserWindow();
+      //   win.webContents.setDevToolsWebContents(devtools.webContents);
+      // } else {
+      //   win.webContents.openDevTools({
+      //     mode: 'right',
+      //   });
+      // }
+      win.webContents.openDevTools({
+        mode: 'right',
+      });
     } else {
       win.removeMenu();
     }

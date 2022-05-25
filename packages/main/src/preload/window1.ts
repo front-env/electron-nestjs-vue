@@ -1,24 +1,19 @@
-import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { ipcRenderer, contextBridge } from 'electron';
 window.addEventListener('DOMContentLoaded', async function () {
-  // const channel = new MessageChannel();
-  // const { port1, port2 } = channel;
+  const channel = new MessageChannel();
 
-  // port1.onmessage = () => {
-  //   alert('mmmmmm');
-  // };
+  const port1 = channel.port1;
+  const port2 = channel.port2;
 
-  // ipcRenderer.postMessage('port', 'message from window1', [port1]);
-  // setTimeout(() => {
-  //   port2.postMessage({ answer: 42 });
-  // }, 5000);
+  port2.postMessage({ answer: 42 });
 
-  ipcRenderer.on('new-client', (event: IpcRendererEvent) => {
-    const [port] = event.ports;
-    port.onmessage = (event) => {
-      // 事件数据可以是任何可序列化的对象 (事件甚至可以
-      // 携带其他 MessagePorts 对象!)
+  ipcRenderer.postMessage('port', null, [port1]);
+  port2.onmessage = (evt: MessageEvent) => {
+    console.log('onmessage: ', evt.data);
+  };
 
-      port.postMessage('message from window1');
-    };
-  });
+  contextBridge.exposeInMainWorld('port2', port2);
+  // Object.assign(window, {
+  //   port2,
+  // });
 });

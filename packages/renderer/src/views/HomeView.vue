@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const onOpenWindow1 = async () => {
-  // const win = await window.electronAPI?.ipcRenderer.invoke("OpenWindow", {
-  //   url: "https://www.douyin.com",
-  //   preload: window.electronAPI?.getPreload("window1"),
-  // });
+  await window.electronAPI?.ipcRenderer.invoke("OpenWindow", {
+    url: "https://www.douyin.com",
+    preload: window.electronAPI?.getPreload("window1"),
+  });
   // const { id } = win;
   // console.log(id);
   // setTimeout(() => {
@@ -27,10 +27,10 @@ const onOpenDialog = async () => {
 if (window.electronAPI) {
   const { ipcRenderer } = window.electronAPI;
 
-  ipcRenderer.invoke("OpenWindow", {
-    url: "https://www.douyin.com",
-    preload: window.electronAPI?.getPreload("window1"),
-  });
+  // ipcRenderer.invoke("OpenWindow", {
+  //   url: "https://www.douyin.com",
+  //   preload: window.electronAPI?.getPreload("window1"),
+  // });
 
   ipcRenderer.on("update-counter", (evt: any, value: any) => {
     alert(value);

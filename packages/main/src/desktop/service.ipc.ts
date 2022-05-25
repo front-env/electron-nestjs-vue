@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { MainWindowService } from './service.main-window';
-import { BrowserWindow, dialog, ipcMain, MessageChannelMain } from 'electron';
+import {
+  BrowserWindow,
+  dialog,
+  ipcMain,
+  IpcMainEvent,
+  MessageChannelMain,
+} from 'electron';
 import { CommonService } from './service.common';
 
 interface IOpenWindow {
@@ -52,20 +58,27 @@ export class IpcService {
       }
     });
 
-    ipcMain.on('request-worker-channel', (event: Electron.IpcMainEvent) => {
-      if (
-        event.senderFrame === this.mainWindowService.win.webContents.mainFrame
-      ) {
-        const { port1, port2 } = new MessageChannelMain();
+    // ipcMain.on('request-worker-channel', (event: Electron.IpcMainEvent) => {
+    //   if (
+    //     event.senderFrame === this.mainWindowService.win.webContents.mainFrame
+    //   ) {
+    //     const { port1, port2 } = new MessageChannelMain();
 
-        this.window1.webContents.postMessage('new-client', null, [port1]);
-        this.mainWindowService.win.webContents.postMessage(
-          'provide-worker-channel',
-          null,
-          [port2],
-        );
-        // event.senderFrame.postMessage('provide-worker-channel', null, [port2]);
-      }
+    //     this.window1.webContents.postMessage('new-client', null, [port1]);
+    //     this.mainWindowService.win.webContents.postMessage(
+    //       'provide-worker-channel',
+    //       null,
+    //       [port2],
+    //     );
+    //     // event.senderFrame.postMessage('provide-worker-channel', null, [port2]);
+    //   }
+    // });
+    ipcMain.on('port', (event: IpcMainEvent) => {
+      const port = event.ports[0];
+      this.mainWindowService.win.webContents.postMessage('message-port', null, [
+        port,
+      ]);
+      port.start();
     });
   }
 }
