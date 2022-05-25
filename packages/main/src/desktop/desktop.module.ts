@@ -5,6 +5,7 @@ import desktopConfig from './desktop.config';
 import { MainWindowService } from './service.main-window';
 import { IpcService } from './service.ipc';
 import { CommonService } from './service.common';
+
 @Module({
   imports: [ConfigModule.forFeature(desktopConfig)],
   providers: [

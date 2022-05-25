@@ -6,6 +6,7 @@ const preloadRoot = path.resolve(__dirname, '../preload');
 @Injectable()
 export class CommonService {
   isDev = !app.isPackaged;
+  preload = path.resolve(__dirname, '../preload/preload.js');
   async prepare() {
     const { isDev } = this;
     app.on('window-all-closed', () => {
