@@ -35,6 +35,14 @@ if (window.electronAPI) {
   ipcRenderer.on("update-counter", (evt: any, value: any) => {
     alert(value);
   });
+
+  //   ipcRenderer.once("message-port", (event) => {
+  //     const [port] = event.ports;
+  //     port.onmessage = (event) => {
+  //       console.log("received result:", event.data);
+  //     };
+  //     port.postMessage(21);
+  //   });
 }
 </script>
 
