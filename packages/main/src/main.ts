@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { bootstrapElectron } from './bootstrap';
 
 async function bootstrap() {
+  const port = await getPort();
   await bootstrapElectron();
   const app = await NestFactory.create(AppModule);
   app.enableCors({
@@ -16,7 +17,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  const port = await getPort();
+
   console.log(`service is starting at: ${port}`);
 
   await app.listen(port);
