@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MainWindowService } from './service.main-window';
 import { BrowserWindow, dialog, ipcMain, IpcMainEvent } from 'electron';
 import { CommonService } from './service.common';
+import { getPort } from '../utils/port';
 
 interface IOpenWindow {
   url: string;
@@ -16,6 +17,7 @@ export class IpcService {
     private readonly mainWindowService: MainWindowService,
     private readonly commonService: CommonService,
   ) {
+    ipcMain.handle('get-port', () => getPort());
     ipcMain.handle('OpenWindow', async (event, opts: IOpenWindow) => {
       const win = new BrowserWindow({
         width: opts.width || 1200,

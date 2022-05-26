@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { ipcRenderer, clipboard, contextBridge } from 'electron';
-
 const ipcRendererWithPrototype = getObjectWithPrototype(ipcRenderer);
+
 export const electronAPI = {
   ipcRenderer: ipcRendererWithPrototype,
   clipboard: clipboard,
