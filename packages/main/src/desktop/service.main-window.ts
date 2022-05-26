@@ -12,9 +12,8 @@ export class MainWindowService {
     private readonly desktopConfiguration: ConfigType<typeof desktopConfig>,
     private commonService: CommonService,
   ) {
-    // const { session } = require('electron')
-    process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
     const { isDev } = this.commonService;
+
     const win = (this.win = new BrowserWindow({
       width: 1500,
       height: 800,

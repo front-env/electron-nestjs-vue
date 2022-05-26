@@ -25,6 +25,7 @@ export default defineConfig({
   },
   build: {
     outDir: "../main/dist/renderer",
+    emptyOutDir: true,
   },
   server: {
     host: "0.0.0.0",

@@ -2,8 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { getPort } from './utils/get-port';
 import { ValidationPipe } from '@nestjs/common';
+import { bootstrapElectron } from './bootstrap';
 
 async function bootstrap() {
+  await bootstrapElectron();
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     credentials: true,

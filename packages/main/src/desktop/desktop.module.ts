@@ -8,18 +8,6 @@ import { CommonService } from './service.common';
 
 @Module({
   imports: [ConfigModule.forFeature(desktopConfig)],
-  providers: [
-    MainWindowService,
-    IpcService,
-    CommonService,
-    {
-      provide: DesktopService,
-      inject: [CommonService],
-      useFactory: async (commonService: CommonService) => {
-        await commonService.prepare();
-        return DesktopService;
-      },
-    },
-  ],
+  providers: [DesktopService, CommonService, MainWindowService, IpcService],
 })
 export class DesktopModule {}
