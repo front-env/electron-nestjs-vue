@@ -17,7 +17,7 @@ export class IpcService {
     private readonly mainWindowService: MainWindowService,
     private readonly commonService: CommonService,
   ) {
-    ipcMain.handle('get-port', () => getPort());
+    ipcMain.handle('GetPort', () => getPort());
     ipcMain.handle('OpenWindow', async (event, opts: IOpenWindow) => {
       const win = new BrowserWindow({
         width: opts.width || 1200,
