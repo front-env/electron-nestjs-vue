@@ -33,7 +33,6 @@
     "@nestjs/typeorm": "^8.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
-    "extend": "^3.0.2",
     "fs-extra": "^10.1.0",
     "get-port-please": "^2.5.0",
     "jquery": "^3.6.0",
