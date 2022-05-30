@@ -7,29 +7,6 @@ const preloadRoot = path.resolve(__dirname, '../preload');
 export class CommonService {
   isDev = !app.isPackaged;
   preload = path.resolve(__dirname, '../preload/preload.js');
-  async prepare() {
-    const { isDev } = this;
-    app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
-    });
-
-    if (isDev) {
-      if (process.platform === 'win32') {
-        process.on('message', (data) => {
-          if (data === 'graceful-exit') {
-            app.quit();
-          }
-        });
-      } else {
-        process.on('SIGTERM', () => {
-          app.quit();
-        });
-      }
-    }
-    await app.whenReady();
-  }
   getPreloadFile(file: string, ext = '.js') {
     return path.resolve(preloadRoot, `${file}${ext}`);
   }
