@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   port2.postMessage({ answer: 42 });
 
-  ipcRenderer.postMessage('port', null, [port1]);
+  ipcRenderer.postMessage('MessageChannelPort', null, [port1]);
   port2.onmessage = (evt: MessageEvent) => {
     console.log('onmessage: ', evt.data);
   };

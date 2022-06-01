@@ -13,7 +13,15 @@ export const electronAPI = {
 export function getObjectWithPrototype<T extends ArgumentType>(obj: T): T {
   const newObj = {} as T;
   for (const key in obj) {
-    newObj[key] = obj[key];
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      continue;
+    }
+    const value = obj[key];
+    if (typeof value === 'function') {
+      newObj[key] = value.bind(obj);
+    } else {
+      newObj[key] = value;
+    }
   }
   return newObj;
 }

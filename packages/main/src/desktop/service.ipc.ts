@@ -53,7 +53,7 @@ export class IpcService {
       }
     });
 
-    ipcMain.on('port', (event: IpcMainEvent) => {
+    ipcMain.on('MessageChannelPort', (event: IpcMainEvent) => {
       const port = event.ports[0];
       this.mainWindowService.win.webContents.postMessage('message-port', null, [
         port,
