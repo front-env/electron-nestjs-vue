@@ -11,10 +11,7 @@ async function bootstrap() {
   });
   await bootstrapElectron();
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    credentials: true,
-    origin: true,
-  });
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
